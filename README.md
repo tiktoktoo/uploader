@@ -1,10 +1,10 @@
 # uploader
 
-Personal tool that uploads videos to the owner's own TikTok account as drafts, through TikTok's Content Posting API. The owner adds sound and posts each draft in the TikTok app.
+Public site for the uploader TikTok developer app: the Terms of Service and Privacy Policy pages the app links to. The tool itself lives in a separate private repository.
 
 ## Layout
 
-- `docs/` is the public site served by GitHub Pages: the Terms of Service and Privacy Policy that the TikTok developer app links to.
+- `docs/` holds the site: `index.html`, `terms.html`, `privacy.html` and `style.css`.
 
 ## Site
 

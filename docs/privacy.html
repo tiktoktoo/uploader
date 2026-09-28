@@ -9,23 +9,50 @@
 <body>
 <main>
 <h1>Privacy Policy</h1>
-<p class="meta">Uploader, a personal tool. Effective 27 September 2026.</p>
+<p class="meta">Uploader, a personal tool. Effective 28 September 2026.</p>
 
-<h2>What the tool accesses</h2>
+<p>Uploader is a command-line tool that runs on one computer. Its only user is its owner, who uses it to send their own videos to their own TikTok account and YouTube channel and to read the statistics of those videos. This page covers both platforms.</p>
+
+<h2>TikTok: what the tool accesses</h2>
 <ul>
 <li><strong>Basic profile information</strong> (the <code>user.info.basic</code> permission): the account's open ID, display name and avatar. Used only to confirm which account is connected.</li>
 <li><strong>Draft upload</strong> (the <code>video.upload</code> permission): used to send the owner's own videos to their TikTok inbox as drafts.</li>
 </ul>
 <p>The tool does not read videos, comments, followers, messages or any other account data.</p>
 
+<h2>YouTube: what the tool accesses</h2>
+<p>Uploader uses YouTube API Services. Google's handling of data is described in the <a href="https://www.google.com/policies/privacy">Google Privacy Policy</a>. The tool asks Google for these permissions on the owner's channel:</p>
+<ul>
+<li><strong>Read the channel</strong> (the <code>youtube.readonly</code> permission): the channel's ID, name and handle; its subscriber, view and video counts; the list of its uploads; and for each video its title, publish date, duration, privacy status, altered-or-synthetic-content setting, and view, like and comment counts.</li>
+<li><strong>Read YouTube Analytics</strong> (the <code>yt-analytics.readonly</code> permission): for each video, watch time, average view duration and percentage, engaged views, subscribers gained, the audience retention curve and the share of views by traffic source.</li>
+<li><strong>Upload videos</strong> (the <code>youtube.upload</code> permission): requested only once uploading through the API is switched on. The tool then sends the owner's own video file with the title, description, privacy setting (public, private or unlisted, chosen for each video before it is sent), an optional publish time, and two settings: altered or synthetic content, and not made for kids. The tool never changes the privacy setting of a video that is already on YouTube.</li>
+</ul>
+<p>The tool does not read comments, messages, subscribers' identities or any other channel's data, and it does not delete or edit anything on YouTube.</p>
+
+<h2>How the data is used</h2>
+<p>Only to show the owner which channel is connected, to show them the statistics of their own videos, and to upload their own videos when they ask. Nothing is used for advertising, profiling or any other purpose.</p>
+
 <h2>Where data is kept</h2>
 <p>The access and refresh tokens TikTok issues are stored only on the owner's computer, in the macOS Keychain. There is no server, no database, no analytics and no tracking. These pages set no cookies.</p>
+<p>For YouTube, the tool stores on that one computer:</p>
+<ul>
+<li>the access and refresh tokens Google issues, in the macOS Keychain;</li>
+<li>statistics snapshots, one file per run, holding IDs and numbers only: the channel ID and counts, and each video's ID, counts, Analytics figures, retention curve and traffic-source shares. Titles, descriptions and other details are shown on screen during a run and never saved;</li>
+<li>after an upload, a short record of it: the video's ID, link, privacy status and upload time.</li>
+</ul>
+<p>The video files and their titles and descriptions are the owner's own material, which the tool sends to YouTube when the owner asks. The tool checks at least every 30 days that its access to the channel is still authorised, each time the statistics are read.</p>
 
 <h2>Sharing</h2>
-<p>Nothing is shared or sold. Data travels only between the owner's computer and TikTok.</p>
+<p>Nothing is shared or sold. Data travels only between the owner's computer and TikTok or Google.</p>
 
 <h2>Removing access</h2>
-<p>Access can be revoked at any time from the app permissions in TikTok's settings. Deleting the Keychain entry removes the stored tokens from the computer.</p>
+<p>TikTok access can be revoked at any time from the app permissions in TikTok's settings. Deleting the Keychain entry removes the stored tokens from the computer.</p>
+<p>YouTube access can be revoked at any time in two ways:</p>
+<ul>
+<li>on Google's security settings page, <a href="https://security.google.com/settings/security/permissions">security.google.com/settings/security/permissions</a>;</li>
+<li>with the tool's logout command, <code>pnpm yt:logout</code>, which revokes the token at Google and deletes it from the Keychain. Adding <code>--delete-data</code> also deletes the stored YouTube statistics.</li>
+</ul>
+<p>After access is revoked by either route, all YouTube data the tool stored is deleted within 7 days. Deleting the data this tool stores does not affect anything stored by YouTube; to delete a video from YouTube, use YouTube itself.</p>
 
 <h2>Changes</h2>
 <p>If this policy changes, this page will show the new effective date.</p>

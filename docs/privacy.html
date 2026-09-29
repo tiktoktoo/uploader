@@ -9,7 +9,7 @@
 <body>
 <main>
 <h1>Privacy Policy</h1>
-<p class="meta">Uploader, a personal tool. Effective 28 September 2026.</p>
+<p class="meta">Uploader, a personal tool. Effective 29 September 2026.</p>
 
 <p>Uploader is a command-line tool that runs on one computer. Its only user is its owner, who uses it to send their own videos to their own TikTok account and YouTube channel and to read the statistics of those videos. This page covers both platforms.</p>
 
@@ -18,28 +18,31 @@
 <li><strong>Basic profile information</strong> (the <code>user.info.basic</code> permission): the account's open ID, display name and avatar. Used only to confirm which account is connected.</li>
 <li><strong>Draft upload</strong> (the <code>video.upload</code> permission): used to send the owner's own videos to their TikTok inbox as drafts.</li>
 </ul>
-<p>The tool also reads the account's follower, following, like and video counts and each public video's view, like, comment and share counts (the user.info.profile, user.info.stats and video.list permissions), to show the owner their own statistics. It does not read comments, messages or any other account data.</p>
+<p>The tool also reads the account's username and its follower, following, like and video counts, and for each public video its caption (the title and <code>video_description</code> fields), post time, duration, link, whether TikTok's generated-content label is on, and its view, like, comment and share counts (the user.info.profile, user.info.stats and video.list permissions). These are used to show the owner their own statistics and, in the post check described below, to confirm that each post matches the owner's plan. It does not read comments, messages or any other account data.</p>
 
 <h2>YouTube: what the tool accesses</h2>
 <p>Uploader uses YouTube API Services. Google's handling of data is described in the <a href="https://www.google.com/policies/privacy">Google Privacy Policy</a>. The tool asks Google for these permissions on the owner's channel:</p>
 <ul>
-<li><strong>Read the channel</strong> (the <code>youtube.readonly</code> permission): the channel's ID, name and handle; its subscriber, view and video counts; the list of its uploads; and for each video its title, publish date, duration, privacy status, altered-or-synthetic-content setting, and view, like and comment counts.</li>
-<li><strong>Read YouTube Analytics</strong> (the <code>yt-analytics.readonly</code> permission): for each video, watch time, average view duration and percentage, engaged views, subscribers gained, the audience retention curve and the share of views by traffic source.</li>
+<li><strong>Read the channel</strong> (the <code>youtube.readonly</code> permission): the channel's ID, name and handle; its subscriber, view and video counts; the list of its uploads; and for each video its title, publish date, duration, privacy status, altered-or-synthetic-content setting, and view, like and comment counts. For the post check described below, the tool also reads each video's description, keyword tags, category, video language (<code>defaultAudioLanguage</code>) and made-for-kids setting.</li>
+<li><strong>Read YouTube Analytics</strong> (the <code>yt-analytics.readonly</code> permission): for each video, watch time, average view duration and percentage, engaged views, subscribers gained, the audience retention curve, the share of views by traffic source, and the number of views from each viewer country (country totals only, never individual viewers).</li>
 <li><strong>Upload videos</strong> (the <code>youtube.upload</code> permission): requested only once uploading through the API is switched on. The tool then sends the owner's own video file with the title, description, privacy setting (public, private or unlisted, chosen for each video before it is sent), an optional publish time, and two settings: altered or synthetic content, and not made for kids. The tool never changes the privacy setting of a video that is already on YouTube.</li>
 </ul>
 <p>The tool does not read comments, messages, subscribers' identities or any other channel's data, and it does not delete or edit anything on YouTube.</p>
 
 <h2>How the data is used</h2>
-<p>Only to show the owner which channel is connected, to show them the statistics of their own videos, and to upload their own videos when they ask. Nothing is used for advertising, profiling or any other purpose.</p>
+<p>Only to show the owner which channel is connected, to show them the statistics of their own videos, to upload their own videos when they ask, and to run the post check. Nothing is used for advertising, profiling or any other purpose.</p>
+<p>The post check (<code>pnpm post:report</code>) compares what the owner planned for each video with what was actually posted on TikTok and YouTube. It matches each post to the owner's plan and to the same video on the other platform, using duration, posting time and the words of the caption, title or description. It then lists any differences, for example missing hashtags, a caption that differs from the plan, a post far from its planned time, the altered-or-synthetic-content or generated-content label not set, or on YouTube a category other than Education, a video language other than English, the video marked made for kids or not public, or hashtags in the title or keyword tags. It also shows the two platforms' results side by side: views, likes, like rate, views per hour, YouTube's average view percentage, and the share of YouTube views from the United States, the United Kingdom and South Africa. When a match scores high, it records the post's link so the owner does not have to paste it.</p>
 
 <h2>Where data is kept</h2>
 <p>The access and refresh tokens TikTok issues are stored only on the owner's computer, in the macOS Keychain. There is no server, no database, no analytics and no tracking. These pages set no cookies.</p>
-<p>For YouTube, the tool stores on that one computer:</p>
+<p>For YouTube, the tool stores the following only on the owner's computer, in the macOS Keychain or in the tool's own folder. The tool does not copy any of it to a server or to anyone else:</p>
 <ul>
 <li>the access and refresh tokens Google issues, in the macOS Keychain;</li>
-<li>statistics snapshots, one file per run, holding IDs and numbers only: the channel ID and counts, and each video's ID, counts, Analytics figures, retention curve and traffic-source shares. Titles, descriptions and other details are shown on screen during a run and never saved;</li>
-<li>after an upload, a short record of it: the video's ID, link, privacy status and upload time.</li>
+<li>statistics snapshots, one file per run, holding IDs and numbers only: the channel ID and counts, and each video's ID, counts, Analytics figures, retention curve, traffic-source shares and views by viewer country. Titles, descriptions and other details are shown on screen during a run and never saved;</li>
+<li>post check files, one per run, holding IDs, numbers and short codes only: for each video the owner's own name for it, its TikTok and YouTube IDs, counts, age in hours, minutes before or after the planned time, how certain each match is, average view percentage, the share of views from the United States, the United Kingdom and South Africa, and a short code for each difference found (such as <code>category_not_education</code>); and for each planned video not found, its name, platform and planned time. The description, keyword tags, category, video language, made-for-kids setting and the details of each difference are shown on screen during a run and never saved;</li>
+<li>after an upload, or when the post check finds a video the owner uploaded in YouTube Studio, a short record of it kept with that video's files in the tool's folder: the video's ID, link, privacy status, publish or upload time, and a checksum of the owner's own video file.</li>
 </ul>
+<p>For TikTok, the tool also keeps in its folder on the owner's computer a statistics snapshot per run, holding the account details and video fields listed above, including captions and links, and, for each posted video, its link and post time.</p>
 <p>The video files and their titles and descriptions are the owner's own material, which the tool sends to YouTube when the owner asks. The tool checks at least every 30 days that its access to the channel is still authorised, each time the statistics are read.</p>
 
 <h2>Sharing</h2>
@@ -50,7 +53,7 @@
 <p>YouTube access can be revoked at any time in two ways:</p>
 <ul>
 <li>on Google's security settings page, <a href="https://security.google.com/settings/security/permissions">security.google.com/settings/security/permissions</a>;</li>
-<li>with the tool's logout command, <code>pnpm yt:logout</code>, which revokes the token at Google and deletes it from the Keychain. Adding <code>--delete-data</code> also deletes the stored YouTube statistics.</li>
+<li>with the tool's logout command, <code>pnpm yt:logout</code>, which revokes the token at Google and deletes it from the Keychain. Adding <code>--delete-data</code> also deletes the stored YouTube statistics, the post check files, and the records of YouTube videos the tool made from YouTube data (records the owner typed in by hand stay).</li>
 </ul>
 <p>After access is revoked by either route, all YouTube data the tool stored is deleted within 7 days. Deleting the data this tool stores does not affect anything stored by YouTube; to delete a video from YouTube, use YouTube itself.</p>
 
